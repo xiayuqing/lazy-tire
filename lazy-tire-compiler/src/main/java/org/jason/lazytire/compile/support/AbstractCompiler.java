@@ -8,7 +8,7 @@ import java.io.File;
 /**
  * Created by Jason.Xia on 16/10/18.
  */
-public class AbstractCompiler implements Compiler {
+public abstract class AbstractCompiler implements Compiler {
     protected File project;
     protected CompileConfig config;
 
@@ -18,16 +18,6 @@ public class AbstractCompiler implements Compiler {
         if (null == config.getProject() || !config.getProject().exists()) {
             throw new IllegalArgumentException("Project not be null in compile configuration.");
         }
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
     }
 
     public File getProject() {

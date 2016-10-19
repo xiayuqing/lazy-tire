@@ -9,10 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>lazy-tire-common</artifactId>
-    <packaging>jar</packaging>
-    <dependencies>
-
-    </dependencies>
+    <artifactId>lazy-tire-admin</artifactId>
+    <packaging>war</packaging>
 
 </project>

@@ -11,6 +11,9 @@
     <modules>
         <module>lazy-tire-common</module>
         <module>lazy-tire-compiler</module>
+        <module>lazy-tire-vcs</module>
+        <module>lazy-tire-admin</module>
+        <module>lazy-tire-porter</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -43,6 +46,11 @@
                 <groupId>org.gitlab</groupId>
                 <artifactId>java-gitlab-api</artifactId>
                 <version>1.2.5</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.7</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

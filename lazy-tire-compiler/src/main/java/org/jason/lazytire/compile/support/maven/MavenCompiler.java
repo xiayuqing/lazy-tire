@@ -138,6 +138,6 @@ public class MavenCompiler extends AbstractCompiler {
 
     @Override
     public void stop() {
-        super.stop();
+
     }
 }

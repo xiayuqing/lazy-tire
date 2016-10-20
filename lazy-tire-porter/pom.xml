@@ -11,4 +11,11 @@
 
     <artifactId>lazy-trie-porter</artifactId>
     <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+        </dependency>
+    </dependencies>
 </project>

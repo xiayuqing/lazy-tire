@@ -16,10 +16,6 @@ public class Authorization {
         HOST = host;
     }
 
-    public static void main(String[] args) {
-        AuthInfo authInfo = new Authorization("http://172.16.61.211/").authorize("yuqing.xia", "xia1994");
-    }
-
     public AuthInfo authorize(String account, String password) {
         AuthInfo authInfo = new AuthInfo();
         try {

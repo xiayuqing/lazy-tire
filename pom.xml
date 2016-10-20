@@ -15,42 +15,51 @@
         <module>lazy-tire-admin</module>
         <module>lazy-tire-porter</module>
     </modules>
+
+    <properties>
+        <jgit.version>4.0.0.201506090130-r</jgit.version>
+        <maven.invoker.version>2.1</maven.invoker.version>
+        <sl4j.version>1.7.12</sl4j.version>
+        <gitlab.api.version>1.2.5</gitlab.api.version>
+        <fastjason.version>1.2.7</fastjason.version>
+        <jsch.version>0.1.54</jsch.version>
+    </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.eclipse.jgit</groupId>
                 <artifactId>org.eclipse.jgit</artifactId>
-                <version>4.0.0.201506090130-r</version>
+                <version>${jgit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.shared</groupId>
                 <artifactId>maven-invoker</artifactId>
-                <version>2.1</version>
+                <version>${maven.invoker.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.12</version>
+                <version>${sl4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.12</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>3.2</version>
+                <version>${sl4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.gitlab</groupId>
                 <artifactId>java-gitlab-api</artifactId>
-                <version>1.2.5</version>
+                <version>${gitlab.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.7</version>
+                <version>${fastjason.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>${jsch.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

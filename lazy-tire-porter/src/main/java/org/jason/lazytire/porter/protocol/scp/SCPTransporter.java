@@ -38,14 +38,14 @@ public class SCPTransporter implements Transporter {
             if (checkAck(in) != 0) {
             }
 
-            File _origi = new File(config.getOriginal());
+            File original = new File(config.getOriginal());
             // here should be "T <last modified time> 0 <last access time> 0", but it is not accessible with java api.
-            String tCommand = "T " + (_origi.lastModified() / 1000) + " 0 " + (_origi.lastModified() / 1000 + " 0\n");
+            String tCommand = "T " + (original.lastModified() / 1000) + " 0 " + (original.lastModified() / 1000 + " 0\n");
             out.write(tCommand.getBytes());
             out.flush();
             checkAck(in);
 
-            String cCommand = "C0644 " + _origi.length();
+            String cCommand = "C0644 " + original.length();
             if (config.getOriginal().lastIndexOf('/') > 0) {
                 cCommand += config.getOriginal().substring(config.getOriginal().lastIndexOf('/') + 1);
             } else {

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>lazy-trie-porter</artifactId>
+    <artifactId>lazy-tire-porter</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

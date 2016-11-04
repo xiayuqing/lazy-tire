@@ -1,9 +1,10 @@
 package org.jason.lazytire.admin.filter;
 
 
-import org.jason.lazytire.admin.support.mapper.AuthMapper;
+import org.jason.lazy.tire.common.utils.Base64;
+import org.jason.lazytire.vcs.support.gitlab.AuthInfo;
+import org.jason.lazytire.vcs.support.gitlab.Authorization;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +18,11 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Named
 public class AuthFilter implements Filter {
-
-    @Inject
-    private AuthMapper authMapper;
-
+    private Authorization authorization;
     private ConcurrentMap<String, Long> session = new ConcurrentHashMap<String, Long>();
 
     public void init(FilterConfig filterConfig) throws ServletException {
+        authorization = new Authorization(filterConfig.getInitParameter("vcs-host"));
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws
@@ -33,21 +32,15 @@ public class AuthFilter implements Filter {
 
         String authorization = request.getHeader("authorization");
 
-        if (null != authorization) {
-            if (session.containsKey(authorization)) {
-                if (System.currentTimeMillis() < session.get(authorization)) {
-                    filterChain.doFilter(request, response);
-                    return;
-                } else {
-                    session.remove(authorization);
-                    needAuthenticate(request, response);
-                }
-            }
-            long l = this.authMapper.selectSessionExpire(authorization);
-            if (0 == l || System.currentTimeMillis() > l) {
-                needAuthenticate(request, response);
-            } else {
+        if (null != authorization && authorization.length() > 6) {
+            String auth = authorization.substring(6);
+            String[] split = new String(Base64.decodeFast(auth)).split(":");
+            AuthInfo authorize = this.authorization.authorize(split[0], split[1]);
+            if (authorize.isSuccess()) {
                 authenticateSuccess(response);
+                filterChain.doFilter(request, response);
+            } else {
+                needAuthenticate(request, response);
             }
         } else {
             needAuthenticate(request, response);
@@ -63,9 +56,10 @@ public class AuthFilter implements Filter {
 
     private void needAuthenticate(final HttpServletRequest request, final HttpServletResponse response) {
         response.setStatus(401);
+        response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-store");
         response.setDateHeader("Expires", 0);
-        response.setHeader("WWW-authenticate", "Realm=\"lts admin need auth\"");
+        response.setHeader("WWW-authenticate", "Basic Realm=\"lazy tire admin need auth\"");
     }
 
     public void destroy() {

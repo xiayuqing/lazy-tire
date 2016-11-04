@@ -7,10 +7,10 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-    <context:component-scan base-package="com.hans.jhd.infra.themis.admin">
-        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
-        <!--<context:exclude-filter type="annotation" expression="javax.inject.Named"/>-->
-        <!--<context:exclude-filter type="annotation" expression="javax.inject.Inject"/>-->
+    <context:component-scan base-package="org.jason.lazytire.admin">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="javax.inject.Named"/>
+        <context:exclude-filter type="annotation" expression="javax.inject.Inject"/>
     </context:component-scan>
 
     <mvc:annotation-driven/>
@@ -23,19 +23,9 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <mvc:view-controller path="/" view-name="login"/>
-    <!--<mvc:view-controller path="/index" view-name="index"/>-->
+    <!--<mvc:view-controller path="/" view-name="login"/>-->
 
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/page/**"/>-->
-            <!--<mvc:mapping path="/edit/**"/>-->
-            <!--<mvc:mapping path="/index"/>-->
-            <!--<bean class="com.hans.jhd.infra.themis.admin.interceptor.AuthInterceptor"/>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
-
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8"/>

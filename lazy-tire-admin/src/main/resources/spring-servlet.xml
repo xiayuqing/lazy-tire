@@ -19,13 +19,17 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass"
                   value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/ad/"/>
+        <property name="prefix" value="/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
     <!--<mvc:view-controller path="/" view-name="login"/>-->
 
     <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
+
+    <mvc:interceptors>
+        <bean class="org.jason.lazytire.admin.filter.AuthInterceptor"/>
+    </mvc:interceptors>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8"/>

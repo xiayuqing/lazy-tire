@@ -18,6 +18,8 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Named
 public class AuthFilter implements Filter {
+    // 7 * 24 * 60 * 60 * 1000
+    private final long EXPIRES = 604800000;
     private Authorization authorization;
     private ConcurrentMap<String, Long> session = new ConcurrentHashMap<String, Long>();
 
@@ -34,13 +36,23 @@ public class AuthFilter implements Filter {
 
         if (null != authorization && authorization.length() > 6) {
             String auth = authorization.substring(6);
-            String[] split = new String(Base64.decodeFast(auth)).split(":");
-            AuthInfo authorize = this.authorization.authorize(split[0], split[1]);
-            if (authorize.isSuccess()) {
-                authenticateSuccess(response);
-                filterChain.doFilter(request, response);
+            String decode = new String(Base64.decodeFast(auth));
+            if (session.containsKey(decode)) {
+                if (System.currentTimeMillis() > session.get(decode)) {
+                    needAuthenticate(request, response);
+                } else {
+                    session.put(decode, System.currentTimeMillis() + EXPIRES);
+                    authenticateSuccess(response);
+                }
             } else {
-                needAuthenticate(request, response);
+                String[] split = decode.split(":");
+                AuthInfo authorize = this.authorization.authorize(split[0], split[1]);
+                if (authorize.isSuccess()) {
+                    authenticateSuccess(response);
+                    filterChain.doFilter(request, response);
+                } else {
+                    needAuthenticate(request, response);
+                }
             }
         } else {
             needAuthenticate(request, response);

@@ -5,21 +5,18 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="account" property="account" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
-        <result column="session" property="session" jdbcType="VARCHAR"/>
         <result column="private_token" property="privateToken" jdbcType="VARCHAR"/>
-        <result column="expire" property="expire" jdbcType="BIGINT"/>
     </resultMap>
     <insert id="insertAccountInfo">
-        INSERT INTO `account` (account,password,private_token) VALUE (#{account},#{password},#{privateToken})
+        INSERT INTO `auth` (account,password,private_token) VALUE (#{account},#{password},#{privateToken})
     </insert>
-    <insert id="insertAuth">
-        INSERT INTO `auth` (id,account,`session`,expire) VALUE (#{auth.id},#{auth.account},#{auth.session},#{auth.expire})
-    </insert>
-    <select id="selectSessionExpire" resultType="java.lang.Long">
-        SELECT expire FROM `auth` WHERE `session` = #{session}
+
+    <select id="validAccountPasswd" resultType="java.lang.String">
+        SELECT private_token FROM `auth` WHERE account = #{account} AND password = #{password}
     </select>
-    <select id="validAccountPasswd" resultType="java.lang.Integer">
-        SELECT * FROM `account` WHERE account = #{account} AND password = #{password}
+
+    <select id="validPrivateToken" resultType="java.lang.Integer">
+        SELECT * FROM `auth` WHERE private_token=#{privateToken}
     </select>
 
 </mapper>

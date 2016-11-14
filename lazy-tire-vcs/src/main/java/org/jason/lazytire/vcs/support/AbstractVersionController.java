@@ -10,15 +10,14 @@ import java.io.File;
  */
 public abstract class AbstractVersionController<T> implements VersionController {
 
-    protected AppContext context;
 
-    public AbstractVersionController(AppContext context) {
-        this.context = context;
+    public AbstractVersionController() {
+
     }
 
     protected abstract T openRepository(String projectName);
 
     protected boolean repositoryExists(String projectName) {
-        return new File(context.getREPORT_REPOSITORY() + "/" + projectName).exists();
+        return new File(AppContext.getProperty(AppContext.REPOSITORY_PROJECT) + "/" + projectName).exists();
     }
 }

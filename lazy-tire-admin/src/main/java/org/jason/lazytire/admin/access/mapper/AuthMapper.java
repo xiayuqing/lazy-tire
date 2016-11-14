@@ -1,7 +1,6 @@
-package org.jason.lazytire.admin.support.mapper;
+package org.jason.lazytire.admin.access.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.jason.lazytire.admin.support.domain.Auth;
 
 import java.util.List;
 

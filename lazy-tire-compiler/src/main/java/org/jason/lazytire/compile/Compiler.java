@@ -8,7 +8,11 @@ import org.jason.lazytire.compile.bean.CompileConfig;
 public interface Compiler {
     void init(CompileConfig config);
 
-    void start();
+    void run();
 
     void stop();
+
+    void afterRun();
+
+    void beforeRun();
 }

@@ -12,7 +12,7 @@
     </bean>
 
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="org.jason.lazytire.admin.support.mapper"/>
+        <property name="basePackage" value="org.jason.lazytire.admin.access.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
     </bean>
 

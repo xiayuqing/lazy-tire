@@ -1,4 +1,4 @@
-package org.jason.lazytire.admin.controller.page;
+package org.jason.lazytire.admin.web.controller.page;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

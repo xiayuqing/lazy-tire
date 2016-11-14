@@ -22,13 +22,11 @@ import java.util.Properties;
  * Created by Jason.Xia on 16/10/18.
  */
 public class MavenCompiler extends AbstractCompiler {
-    private AppContext context;
     private Properties properties;
     private List<String> profiles;
     private List<String> goals;
 
-    public MavenCompiler(AppContext context) {
-        this.context = context;
+    public MavenCompiler() {
 
     }
 
@@ -40,7 +38,7 @@ public class MavenCompiler extends AbstractCompiler {
         config.setCompileType(CompileType.MANUAL);
         config.setProject(new File("/Users/yuqingxia/ci-test/service-schedule"));
         compiler.init(config);
-        compiler.start();
+        compiler.run();
     }
 
     @Override
@@ -80,7 +78,7 @@ public class MavenCompiler extends AbstractCompiler {
     }
 
     @Override
-    public void start() {
+    public void run() {
         InvocationRequest request = new DefaultInvocationRequest();
         if (!new File(project.getAbsolutePath() + "/pom.xml").exists()) {
             throw new CompileException("Not find pom.xml. path: " + project.getAbsolutePath() + "/pom.xml");
@@ -91,7 +89,7 @@ public class MavenCompiler extends AbstractCompiler {
         request.setProperties(properties);
         request.setPomFile(new File(project.getAbsolutePath() + "/pom.xml"));
         Invoker invoker = new DefaultInvoker();
-        StringBuilder sb = new StringBuilder(context.getREPORT_REPOSITORY());
+        StringBuilder sb = new StringBuilder(AppContext.getProperty(AppContext.REPOSITORY_REPORT));
         switch (config.getCompileType()) {
             case SCHEDULE:
                 sb.append("/schedule/")
@@ -124,7 +122,7 @@ public class MavenCompiler extends AbstractCompiler {
 
         try {
             request.setOutputHandler(new PrintStreamHandler(new PrintStream(reportFile), false));
-            invoker.setMavenHome(new File(context.getMAVEN_HOME()));
+            invoker.setMavenHome(new File(AppContext.getProperty(AppContext.MAVEN_HOME)));
             InvocationResult result = invoker.execute(request);
             if (0 != result.getExitCode()) {
                 FileWriter writer = new FileWriter(reportFile, true);
@@ -138,6 +136,16 @@ public class MavenCompiler extends AbstractCompiler {
 
     @Override
     public void stop() {
+
+    }
+
+    @Override
+    public void afterRun() {
+
+    }
+
+    @Override
+    public void beforeRun() {
 
     }
 }

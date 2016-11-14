@@ -1,4 +1,4 @@
-package org.jason.lazytire.admin.filter;
+package org.jason.lazytire.admin.web.filter;
 
 
 import org.jason.lazy.tire.common.utils.Base64;

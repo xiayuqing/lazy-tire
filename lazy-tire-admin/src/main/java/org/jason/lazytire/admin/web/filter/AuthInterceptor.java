@@ -1,6 +1,6 @@
-package org.jason.lazytire.admin.filter;
+package org.jason.lazytire.admin.web.filter;
 
-import org.jason.lazytire.admin.support.mapper.AuthMapper;
+import org.jason.lazytire.admin.access.mapper.AuthMapper;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

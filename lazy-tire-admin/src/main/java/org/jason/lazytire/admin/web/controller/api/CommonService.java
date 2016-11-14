@@ -1,7 +1,7 @@
-package org.jason.lazytire.admin.controller.api;
+package org.jason.lazytire.admin.web.controller.api;
 
 import org.jason.lazy.tire.common.utils.Base64;
-import org.jason.lazytire.admin.support.mapper.AuthMapper;
+import org.jason.lazytire.admin.access.mapper.AuthMapper;
 import org.jason.lazytire.vcs.support.gitlab.AuthInfo;
 import org.jason.lazytire.vcs.support.gitlab.Authorization;
 import org.springframework.stereotype.Controller;

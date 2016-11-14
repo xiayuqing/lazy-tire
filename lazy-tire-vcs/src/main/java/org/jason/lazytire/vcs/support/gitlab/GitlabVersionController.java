@@ -22,8 +22,10 @@ import java.util.List;
  */
 public class GitlabVersionController extends AbstractVersionController<Git> {
 
-    public GitlabVersionController(AppContext context) {
-        super(context);
+    public static void main(String[] args) throws IOException {
+        GitlabAPI connect = GitlabAPI.connect("http://172.16.61.211/", "p7RxzsjkbkwXL9yyGtAc");
+        List<GitlabProject> projects = connect.getProjects();
+        GitlabProject project = connect.getProject(59);
     }
 
     @Override
@@ -33,14 +35,14 @@ public class GitlabVersionController extends AbstractVersionController<Git> {
         }
 
         try {
-            return Git.open(new File(context.getREPORT_REPOSITORY() + "/" + projectName));
+            return Git.open(new File(AppContext.getProperty(AppContext.REPOSITORY_PROJECT) + "/" + projectName));
         } catch (IOException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }
     }
 
     public List<GitlabProject> getProjects(String privateToken) {
-        GitlabAPI connect = GitlabAPI.connect(context.getGIT_ADDRESS(), privateToken);
+        GitlabAPI connect = GitlabAPI.connect(AppContext.getProperty(AppContext.GIT_ADMIN_ADDRESS), privateToken);
         try {
             return connect.getProjects();
         } catch (IOException e) {
@@ -84,11 +86,11 @@ public class GitlabVersionController extends AbstractVersionController<Git> {
         }
 
         CloneCommand cloneCommand = Git.cloneRepository();
-        cloneCommand.setDirectory(new File(context.getPROJECT_REPOSITORY() + "/" + projectName));
+        cloneCommand.setDirectory(new File(AppContext.getProperty(AppContext.REPOSITORY_PROJECT) + "/" + projectName));
         cloneCommand.setBranch(branch);
         cloneCommand.setURI(url);
-        cloneCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(context.getGIT_ADMIN_ACCOUNT(),
-                context.getGIT_ADMIN_PASSWORD()));
+        cloneCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(AppContext.getProperty(AppContext
+                .GIT_ADMIN_ACCOUNT), AppContext.getProperty(AppContext.GIT_ADMIN_PASSWD)));
         try {
             cloneCommand.call();
         } catch (GitAPIException e) {
@@ -96,19 +98,14 @@ public class GitlabVersionController extends AbstractVersionController<Git> {
         }
     }
 
-    public List<String> listBranches(String privateToken, String projectId) {
-        GitlabAPI gitlabAPI = GitlabAPI.connect(context.getGIT_ADDRESS(), privateToken);
-        List<String> result = new ArrayList<String>();
+    public List<GitlabBranch> listBranches(String privateToken, int projectId) {
+        GitlabAPI gitlabAPI = GitlabAPI.connect(AppContext.getProperty(AppContext.REPOSITORY_PROJECT), privateToken);
         try {
-            List<GitlabBranch> branches = gitlabAPI.getBranches(projectId);
-            for (GitlabBranch item : branches) {
-                result.add(item.getName());
-            }
+            return gitlabAPI.getBranches(projectId);
         } catch (IOException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }
 
-        return result;
     }
 
     private boolean branchLocalExists(Git git, String branch) {
@@ -124,6 +121,4 @@ public class GitlabVersionController extends AbstractVersionController<Git> {
 
         return false;
     }
-
-
 }

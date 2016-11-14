@@ -28,7 +28,7 @@
     <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
 
     <mvc:interceptors>
-        <bean class="org.jason.lazytire.admin.filter.AuthInterceptor"/>
+        <bean class="org.jason.lazytire.admin.web.filter.AuthInterceptor"/>
     </mvc:interceptors>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

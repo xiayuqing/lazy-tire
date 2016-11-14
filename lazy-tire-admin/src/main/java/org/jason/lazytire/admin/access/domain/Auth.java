@@ -1,4 +1,4 @@
-package org.jason.lazytire.admin.support.domain;
+package org.jason.lazytire.admin.access.domain;
 
 import java.io.Serializable;
 
@@ -6,18 +6,18 @@ import java.io.Serializable;
  * Created by Jason.Xia on 16/10/31.
  */
 public class Auth implements Serializable {
-    private long id;
+    private String id;
     private String account;
     private String password;
     private String session;
     private String privateToken;
     private long expire;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -12,11 +12,6 @@ public class CompileConfig {
     private String projectRepository;
     private String reportRepository;
     private Map<String, Integer> poolConfig;
-    private int poolCore;
-    private int poolMax;
-    // second
-    private int poolAlive;
-    private int poolQueue;
 
     public String getMavenHome() {
         return mavenHome;

@@ -1,21 +1,24 @@
 package org.jason.lazytire.compile;
 
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by Jason.Xia on 16/11/14.
  */
-public class CompilerManager {
+public class CompilerAgent {
     private ThreadPoolExecutor executor;
     private String MAVEN_HOME;
     private String PROJECT_REPOSITORY;
     private String REPORT_REPOSITORY;
+    private long shutdownTimeout = 0;
     private int executorCoreSize = 0;
     private int executorMaxSize = 0;
     private int executorAliveSecond = 0;
     private int executorQueueSize = 0;
-
+    private AtomicBoolean enable = new AtomicBoolean(true);
     private AtomicBoolean started = new AtomicBoolean(false);
 
     public void start() {
@@ -24,11 +27,27 @@ public class CompilerManager {
             return;
         }
 
-        
+        executor = new ThreadPoolExecutor(executorCoreSize, executorMaxSize, executorAliveSecond, TimeUnit.SECONDS,
+                new LinkedBlockingDeque(executorQueueSize));
+
     }
 
     public void stop() {
+        if (0 == shutdownTimeout) {
+            this.executor.shutdownNow();
+        } else {
+            if (this.executor.getQueue().isEmpty()) {
+                enable.set(false);
+            }
 
+            try {
+                Thread.sleep(shutdownTimeout);
+            } catch (InterruptedException e) {
+                throw new IllegalStateException(e.getMessage(), e);
+            }
+
+            this.executor.shutdown();
+        }
     }
 
     public String getMAVEN_HOME() {
@@ -85,5 +104,9 @@ public class CompilerManager {
 
     public void setExecutorQueueSize(int executorQueueSize) {
         this.executorQueueSize = executorQueueSize;
+    }
+
+    public void setShutdownTimeout(long shutdownTimeout) {
+        this.shutdownTimeout = shutdownTimeout;
     }
 }

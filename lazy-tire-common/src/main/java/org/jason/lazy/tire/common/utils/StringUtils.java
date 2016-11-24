@@ -18,7 +18,7 @@ public class StringUtils {
         return !isEmpty(cs) && cs.length() > 0;
     }
 
-    public static boolean isInteger(String str) {
+    public static boolean isNum(String str) {
         return !(null == str || 0 == str.length()) && INT_PATTERN.matcher(str).matches();
     }
 

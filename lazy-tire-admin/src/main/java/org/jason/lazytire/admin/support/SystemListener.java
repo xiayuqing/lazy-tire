@@ -1,7 +1,7 @@
 package org.jason.lazytire.admin.support;
 
 import org.jason.lazy.tire.common.AppContext;
-import org.jason.lazytire.compile.CompilerManagerFactory;
+import org.jason.lazytire.compile.CompilerAgentFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -16,7 +16,7 @@ public class SystemListener implements ServletContextListener {
         System.out.println("lazytire.admin.config.path : " + configPath);
 
         AppContext.load(configPath);
-        CompilerManagerFactory.start(configPath);
+        CompilerAgentFactory.start(configPath);
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {

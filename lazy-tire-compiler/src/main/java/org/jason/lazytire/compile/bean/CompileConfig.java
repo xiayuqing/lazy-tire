@@ -1,6 +1,5 @@
 package org.jason.lazytire.compile.bean;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,6 +11,7 @@ public class CompileConfig {
     private String projectRepository;
     private String reportRepository;
     private Map<String, Integer> poolConfig;
+    private Map<String, String> config;
 
     public String getMavenHome() {
         return mavenHome;
@@ -43,5 +43,13 @@ public class CompileConfig {
 
     public void setPoolConfig(Map<String, Integer> poolConfig) {
         this.poolConfig = poolConfig;
+    }
+
+    public Map<String, String> getConfig() {
+        return config;
+    }
+
+    public void setConfig(Map<String, String> config) {
+        this.config = config;
     }
 }

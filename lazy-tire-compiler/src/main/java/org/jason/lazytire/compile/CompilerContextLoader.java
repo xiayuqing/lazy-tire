@@ -49,15 +49,19 @@ public class CompilerContextLoader {
             config.setReportRepository(reportRepos);
 
             Map<String, Integer> poolConfigs = new HashMap<>();
+            Map<String, String> extConfig = new HashMap<>();
             for (Map.Entry<Object, Object> entry : properties.entrySet()) {
                 String key = entry.getKey().toString();
                 if (key.startsWith("pool.")) {
                     Integer value = null == entry.getValue() ? -1 : (Integer) entry.getValue();
                     poolConfigs.put(key.replace("pool.", ""), value);
+                } else if (key.startsWith("config.")) {
+                    extConfig.put(key.replace("config.", ""), entry.getValue().toString());
                 }
             }
 
             config.setPoolConfig(poolConfigs);
+            config.setConfig(extConfig);
         } catch (Exception e) {
             throw new IllegalStateException(e.getMessage(), e);
         }

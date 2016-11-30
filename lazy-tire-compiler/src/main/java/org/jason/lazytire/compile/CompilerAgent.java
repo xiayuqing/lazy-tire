@@ -1,5 +1,7 @@
 package org.jason.lazytire.compile;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -33,20 +35,19 @@ public class CompilerAgent {
     }
 
     public void stop() {
+        enable.set(false);
         if (0 == shutdownTimeout) {
-            this.executor.shutdownNow();
+            executor.shutdownNow();
         } else {
-            if (this.executor.getQueue().isEmpty()) {
-                enable.set(false);
-            }
-
-            try {
-                Thread.sleep(shutdownTimeout);
-            } catch (InterruptedException e) {
-                throw new IllegalStateException(e.getMessage(), e);
-            }
-
-            this.executor.shutdown();
+            executor.shutdown();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (!executor.isShutdown()) {
+                        executor.shutdownNow();
+                    }
+                }
+            }, shutdownTimeout);
         }
     }
 

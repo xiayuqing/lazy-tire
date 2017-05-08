@@ -11,7 +11,7 @@ public class ApplicationContextBuilder {
         if (null == context) {
             synchronized (this) {
                 if (null == context) {
-                    context = new AppContext(config);
+//                    context = new AppContext(config);
                 }
             }
         }

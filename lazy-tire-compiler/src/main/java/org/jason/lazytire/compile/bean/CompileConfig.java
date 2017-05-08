@@ -1,5 +1,6 @@
 package org.jason.lazytire.compile.bean;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -12,6 +13,33 @@ public class CompileConfig {
     private String reportRepository;
     private Map<String, Integer> poolConfig;
     private Map<String, String> config;
+    private File project;
+    private CompileType compileType;
+    private String projectName;
+
+    public File getProject() {
+        return project;
+    }
+
+    public void setProject(File project) {
+        this.project = project;
+    }
+
+    public CompileType getCompileType() {
+        return compileType;
+    }
+
+    public void setCompileType(CompileType compileType) {
+        this.compileType = compileType;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
     public String getMavenHome() {
         return mavenHome;
@@ -52,4 +80,5 @@ public class CompileConfig {
     public void setConfig(Map<String, String> config) {
         this.config = config;
     }
+
 }
